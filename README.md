@@ -1,6 +1,6 @@
 # PML
 
-<a href="https://rawgit.com/notyetend/PLM/master/notes/PytyonMachineLearning_Chapter01.html">Chapter1. Giving Computers the Ability to Learn from Data</a>
+<a href="https://rawgit.com/notyetend/PML/master/notes/PytyonMachineLearning_Chapter01.html">Chapter1. Giving Computers the Ability to Learn from Data</a>
 
 Chapter2. Training Machine Learning Algorithms
 
