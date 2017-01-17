@@ -1,4 +1,6 @@
 # PML
+'Python을 이용한 머신러닝' 스터디자료  
+Reference: Sebastian "Raschka, Python Machine Learning", 2015
 
 <a href="https://rawgit.com/notyetend/PML/master/notes/PytyonMachineLearning_Chapter01.html">Chapter1. Giving Computers the Ability to Learn from Data</a>
 
