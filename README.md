@@ -2,9 +2,9 @@
 'Python을 이용한 머신러닝' 스터디자료  
 Reference: Sebastian "Raschka, Python Machine Learning", 2015
 
-<a href="https://rawgit.com/notyetend/PML/master/notes/PytyonMachineLearning_Chapter01.html">Chapter1. Giving Computers the Ability to Learn from Data</a>
+<a href="https://rawgit.com/notyetend/PML/master/notes/PythonMachineLearning_Chapter01.html">Chapter1. Giving Computers the Ability to Learn from Data</a>
 
-<a href="https://rawgit.com/notyetend/PML/master/notes/PytyonMachineLearning_Chapter02.html">Chapter2. Training Machine Learning Algorithms</a>
+<a href="https://rawgit.com/notyetend/PML/master/notes/PythonMachineLearning_Chapter02.html">Chapter2. Training Machine Learning Algorithms</a>
 
 Chapter3. A Tour of Machine Learning Classifiers Using Scikit-learn
 
