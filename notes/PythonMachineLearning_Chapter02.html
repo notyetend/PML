@@ -11867,7 +11867,7 @@ $$z = b + \sum_{i} x_i w_i$$<br>
 $$\phi(z) = \begin{cases} 1 & \rm{if} ~ z \geq 0 \\ -1 & \rm{otherwise}
 \end{cases}$$</p>
 <p>이를 그래프로 아래와 같이 나타낼 수 있다. 
-이런 판단을 하는 함수를 activation function이라 부름, 수학적으로는 sign function이라 부름.</p>
+이런 판단을 하는 함수를 activation function $\phi(\cdot)$이라 부르는데, 여기에서는 quantizer(sign function)가 $\phi(\cdot)$로 쓰이고 있다.</p>
 
 </div>
 </div>
@@ -11966,8 +11966,8 @@ $$w_1 <  0, w_2 > \theta$$</p>
 <blockquote><ol>
 <li>모든 weight($w_1, w_2, \dots , w_p$)들을 0으로 초기화</li>
 <li><p>각 데이터 건에 대하여 잘 예측했다면 $w_j$를 변경하지 않음<br>
-잘못 예측했다면 $w_j$를 $x_j$에 비례하여 감소
-$$w_j := w_j + \eta ( y^{(i)} - y^{(i)}) x_j^{(i)}$$</p>
+반면 잘못 예측했다면 $w_j$를 $\eta x_j$에 비례하여 감소 혹은 증가
+$$w_j := w_j + \eta ( y^{(i)} - \hat{y}^{(i)}) x_j^{(i)}$$</p>
 </li>
 <li><p>더 이상 weight들의 (큰) 변화가 없을 때까지 2를 반복</p>
 </li>
@@ -12800,7 +12800,7 @@ AElFTkSuQmCC
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>앞서 Perceptrons라는 single-layer neural network에 대해 살펴봤었다. 이번에는 Adaptive Linear Neuron이라는 또 다른 종류의 single-layer neural network에 대해 알아보겠다.</p>
-<p>앞서 Perceptron에서는 아래와 같이 unit step function의 값과 해당 $x_j^{(i)}$에 비례($\eta$)하여 weight들을 조절했었다. 즉 weight이 많이 잘못되서 예측이 틀린 경우나 weight이 조금 잘못되어 예측이 틀린 경우에나 ($\eta$와 $x_j^{(j)}$에 영향을 받기는 하지만) weight을 조절하는 양이 똑같았다. (즉 아래 식에서와 같이 단지 $y^{(i)}$와 $\hat{y}^{(i)}$를 비교하고 있음)</p>
+<p>앞서 Perceptron에서는 아래와 같이 예측 오차($y^{(i)} - \hat{y}^{(i)}$)의 값에 따라 ( $\eta x_j^{(i)}$에 비례하여) weight들을 조절했었다. 즉 weight이 많이 잘못되서 예측이 틀린 경우나 weight이 조금 잘못되어 예측이 틀린 경우에나 ($\eta$와 $x_j^{(j)}$에 영향을 받기는 하지만) weight을 조절하는 양이 똑같았다. (즉 아래 식에서와 같이 단지 $y^{(i)}$와 $\hat{y}^{(i)}$를 비교하고 있음)</p>
 $$w_j := w_j + \eta ( y^{(i)} - \hat{y}^{(i)}) x_j^{(i)}$$
 </div>
 </div>
@@ -12852,7 +12852,40 @@ $$w_j := w_j + \eta ( y^{(i)} - w_j x_j^{(j)}) x_j^{(i)}$$</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Supervised learning에서 어떤 모형의 성능이 좋다는 것은 결국 예측값 $\hat{y}$과 실제값 $y$사이의 차이가 작다는 것이다. 그 차이가 작도록 weight을 잘 정하면 되는 것이다.</p>
-<p>이 차이를 error 혹은 cost라고 부르며 사용할 (training) dataset에 대한 전체 error를 아래와 같이 정의할 수 있다.(물론 다른 정의 방식도 있음)</p>
+<p>이 차이를 error 혹은 cost라고 부르며 사용할 (training) dataset 전체의 error를 아래와 같이 Sum of Squared Error(SSE)로 정의할 수 있다.(물론 다른 정의 방식도 있음)</p>
+$$J(\mathbf{w}) = \frac{1}{2} \sum_i \left( y^{(i)} - \phi(z^{(i)})\right)^2$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\phi(z^{(i)}) = w_0 x_0 + w_1 x_1 + \cdots + w_p x_p$인데,<br>
+만약 $w_1$만 존재하는 상황($\phi(z^{(i)}) = w_1 x_1$)을 가정하면 $J(\mathbf{w})$는 아래와 같고<br>
+(편의를 위해 subscript ${}_{\_1}$은 생략)<br>
+$$J(\mathbf{w}) = \frac{1}{2} \sum_i \left( y^{(i)} - w^{(i)} x^{(i)}\right)^2$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$y^{(i)}$와 $$는 상수이므로 w에 대한 2차식이므로 아래와 같이 그려볼 수 있다.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img  src="./_images/02_gradient.PNG"/></p>
 
 </div>
 </div>
