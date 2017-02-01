@@ -11688,10 +11688,29 @@ ul.typeahead-list > li > a {
 
     </style>
 <style type="text/css">
-    .CodeMirror { /* code font */
-    font-family: Consolas, Verdana, Tahoma;
+    /*
+Placeholder for custom user CSS
+mainly to be overridden in profile/static/custom/custom.css
+This will always be an empty file in IPython
+*/
+
+
+
+/* Change code font */
+.CodeMirror pre {
+    font-family: Consolas;
     font-size: 10pt;
 }
+
+div.output pre{
+    font-family: Consolas;
+    font-size: 9pt;
+}
+
+/*
+Fonts
+"Code New Roman", Consolas, Verdana, Tahoma, Courier
+*/
 
     </style>
 
@@ -11758,16 +11777,6 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>(아직 작성중 입니다.)</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Chapter-2.-Training-Machine-Learning-Algorithms-for-Classification">Chapter 2. Training Machine Learning Algorithms for Classification<a class="anchor-link" href="#Chapter-2.-Training-Machine-Learning-Algorithms-for-Classification">&#182;</a></h1>
 </div>
 </div>
@@ -11779,10 +11788,10 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>앞서 supervised learning을 설명하면서<br>
 label이 범주형 변수일 경우 <u>Classification</u> problem이고,<br>
-label이 연속일 경우 <u>Regression</u> problem이라고 했었다.</p>
+label이 연속형 변수일 경우 <u>Regression</u> problem이라고 했었다.</p>
 <p>Chapter2에서는 <u>Classification</u> 알고리즘 중 (아주) 고전이라고 할 수 있는<br>
 <strong>Perceptrons</strong>와 <strong>Adaptive linear neurans</strong>에 대해서 알아보고,<br>
-기본적인 최적화(optimization) 기법에 대해서도 알아보자.<br>
+기본적인 최적화(optimization) 기법에 대해서도 알아본다.<br>
 (Classification problem에 대한 connectionist적 관점에서의 접근)</p>
 
 </div>
@@ -12832,7 +12841,7 @@ $$w_j := w_j + \eta ( y^{(i)} - w_j x_j^{(j)}) x_j^{(i)}$$</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>그렇다면 Adaptive linear neurons에서는 왜 weight을 저렇게 조절하겠다는 것일까? 조절의 방향(부호)와 크기는 어떻게 결정되는 것일까?</p>
+<p>그렇다면 Adaptive linear neurons에서는 왜 weight을 저렇게 조절하겠다는 것일까? 조절의 방향(부호)와 크기는 어떻게 결정되는 것일까? Gradient descent를 통해 그에 대한 힌트를 얻어보자.</p>
 
 </div>
 </div>
@@ -12851,8 +12860,10 @@ $$w_j := w_j + \eta ( y^{(i)} - w_j x_j^{(j)}) x_j^{(i)}$$</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Supervised learning에서 어떤 모형의 성능이 좋다는 것은 결국 예측값 $\hat{y}$과 실제값 $y$사이의 차이가 작다는 것이다. 그 차이가 작도록 weight을 잘 정하면 되는 것이다.</p>
-<p>이 차이를 error 혹은 cost라고 부르며 사용할 (training) dataset 전체의 error를 아래와 같이 Sum of Squared Error(SSE)로 정의할 수 있다.(물론 다른 정의 방식도 있음)</p>
+<p>Supervised learning에서 어떤 모형의 성능이 좋다는 것은 결국 예측값 $\hat{y}$과 실제값 $y$사이의 차이가 작다는 것이고, 좋은 모형을 만들기 위해서는 이 차이(error, cost)가 작도록 weight을 잘 정하면 되는 것이다.</p>
+<p>이 차이를 error 혹은 cost라고 부르며, 사용할 (training) dataset 전체의 error를 아래와 같이 Sum of Squared Error(SSE) function, $J(\mathbf{w})$로 정의할 수 있다. 이런 함수를 objective function, cost function, error function 등으로 부른다.</p>
+<p>이는 $n$건의 data record에 대한 $n$개의 예측값 $\hat{y}^{(i)}$과 각각에 대응하는 $n$개의 실제값 $y^{(i)}$들의 차이를 구할 수 있고, 이 $n$개의 차이를 제곱하여 더한 것이다. 또한 계산 편의를 위해 $\frac{1}{2}$를 곱했다.</p>
+<p>물론 error 절대값의 합을 이용한다거나 weight들의 제곱합을 더하는 등 다른 방식의 cost function을 사용할수도 있다.</p>
 $$J(\mathbf{w}) = \frac{1}{2} \sum_i \left( y^{(i)} - \phi(z^{(i)})\right)^2$$
 </div>
 </div>
@@ -12862,10 +12873,7 @@ $$J(\mathbf{w}) = \frac{1}{2} \sum_i \left( y^{(i)} - \phi(z^{(i)})\right)^2$$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>$\phi(z^{(i)}) = w_0 x_0 + w_1 x_1 + \cdots + w_p x_p$인데,<br>
-만약 $w_1$만 존재하는 상황($\phi(z^{(i)}) = w_1 x_1$)을 가정하면 $J(\mathbf{w})$는 아래와 같고<br>
-(편의를 위해 subscript ${}_{\_1}$은 생략)<br>
-$$J(\mathbf{w}) = \frac{1}{2} \sum_i \left( y^{(i)} - w^{(i)} x^{(i)}\right)^2$$</p>
+<p>결국 예측과 실제의 차이를 어떤 함수로 나타낸 것이고, 이 함수값이 가장 작아지도록 함수내 파라미터를 조절하면 되는 것이다. 이런 연산을 <strong>최적화(optimization)</strong>라 하며, 그 과정을 머신러닝에서는 학습(learning, training) 이라 하며 통계학에서는 모수 추정(parameter estimation)이라 한다.</p>
 
 </div>
 </div>
@@ -12875,7 +12883,33 @@ $$J(\mathbf{w}) = \frac{1}{2} \sum_i \left( y^{(i)} - w^{(i)} x^{(i)}\right)^2$$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>$y^{(i)}$와 $$는 상수이므로 w에 대한 2차식이므로 아래와 같이 그려볼 수 있다.</p>
+<hr>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>우리는 다양한 최적화 알고리즘 중 <strong>Gradient descent</strong>에 대해 알아볼 것이다.</p>
+<p>앞서 cost function $J(\mathbf{w})$에서 
+$\phi(z^{(i)}) = w_0 x_0 + w_1 x_1 + \cdots + w_p x_p$인데,<br>
+만약 변수 $x$가 하나만 존재하여 $w_1$만 있는 상황($\phi(z^{(i)}) = w_1 x_1$)을 가정하면<br>
+$J(w)$는 아래와 같다. (편의를 위해 subscript ${}_{\_1}$은 생략)<br>
+$$J(w) = \frac{1}{2} \sum_i \left( y^{(i)} - w x^{(i)}\right)^2$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$y^{(i)}$와 $x^{(i)}$는 (데이터) 상수이므로<br>
+위 식은 $w$에 대한 2차식이고    아래와 같이 그려볼 수 있다.</p>
 
 </div>
 </div>
@@ -12895,6 +12929,7 @@ $$J(\mathbf{w}) = \frac{1}{2} \sum_i \left( y^{(i)} - w^{(i)} x^{(i)}\right)^2$$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>(위 그림에서는 한눈에 $J(w)$가 가장 작아지는 지점의 $w$와 그때의 $J_{min}(w)$를 쉽게 찾을 수 있으나, 변수의 수가 많아질 경우 cost function은 $w$에 대한 다차원 함수가 되므로 최소점을 찾는 것이 쉬운 문제가 아닐 수 있다.)</p>
 
 </div>
 </div>
@@ -12904,6 +12939,9 @@ $$J(\mathbf{w}) = \frac{1}{2} \sum_i \left( y^{(i)} - w^{(i)} x^{(i)}\right)^2$$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>아무튼 위 예에서와 같이 현재의 $w$이 검은 공의 지점의 값일 경우 $J(w)$가 작아지기 위해서는 공을 아래로 굴려야 할 것인데, 그 방향은 검은 공에서 2차식의 기울기(부호)의 반대 방향이라 할 수 있고, 그 크기는 기울기 절대값 크기에 비례하도록 한다면 합리적일 것이다. (즉 그 점에서의 1차 미분의 크기에 비례하도록 weight을 줄이면 되는 것이다.)
+$$w := w + \Delta w$$
+$$\Delta w = -\eta \Delta J(\mathbf{W}) = -\eta \frac{\partial J(w)}{\partial w}$$</p>
 
 </div>
 </div>
@@ -12913,6 +12951,7 @@ $$J(\mathbf{w}) = \frac{1}{2} \sum_i \left( y^{(i)} - w^{(i)} x^{(i)}\right)^2$$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>위에서 비례상수 $\eta$를 사용하는데, 이는 한번의 weight 수정시 얼마나 더 멀리 이동할 것인지를 결정한다. 그런데 이 값에 따라 학습이 잘 될 수도 있고 그렇지 않을 수도 있다. 예를들어 $\eta$가 너무 결국 최소점에 도달하겠지만 그 속도가 너무 느릴 것이고, $\eta$가 너무 클 경우 최소점 근처에 빨리 가겠지만 그 지점을 지나칠수도 있다.</p>
 
 </div>
 </div>
@@ -12922,18 +12961,104 @@ $$J(\mathbf{w}) = \frac{1}{2} \sum_i \left( y^{(i)} - w^{(i)} x^{(i)}\right)^2$$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p><img  src="./_images/02_learning_rate.PNG"/></p>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>앞서 제시한 것과 같이 $J(w)$의 $w$에 대한 편미분은 아래와 같은데</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$
+\begin{align}
+\frac{\partial J(w)}{\partial w} &= \frac{\partial}{\partial w}\{\frac{1}{2} \sum_i \left( y^{(i)} - w x^{(i)}\right)^2\}\\
+&= - \frac{\partial}{\partial w} \sum_i \left( y^{(i)} - w x^{(i)}\right)x^{(i)}\\
+\end{align}
+$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>이는 결국 Adaptive linear neurons에서 weight들을 조절하는 방법과 같다.     $$w_j := w_j + \eta ( y^{(i)} - w_j x_j^{(j)}) x_j^{(i)}$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h6 id="Numpy-matrix-operations">Numpy matrix operations<a class="anchor-link" href="#Numpy-matrix-operations">&#182;</a></h6>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Adaptive Linear Neuron의 Python 구현에 앞서 오래전에 배웠던 간단한 matrix 연산을 상기해보자.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\mathbf{w} = \begin{pmatrix}
+0.1 \\
+0.2 \\
+0.3
+\end{pmatrix}, ~~
+\mathbf{X} = \begin{pmatrix}
+1 & 2 \\
+3 & 4 \\
+5 & 6
+\end{pmatrix}
+$$$$\mathbf{w}^T~ \mathbf{X} = \begin{pmatrix}
+0.1 & 0.2 & 0.3 
+\end{pmatrix}
+\begin{pmatrix}
+1 & 2 \\
+3 & 4 \\
+5 & 6
+\end{pmatrix} = 
+\begin{pmatrix}
+2.2 \\
+2.8
+\end{pmatrix}
+$$
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ts1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]],</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
-<span class="n">ts2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">10</span><span class="p">],[</span><span class="mi">100</span><span class="p">],</span> <span class="p">[</span><span class="mi">1000</span><span class="p">]],</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
-<span class="n">ts2</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">],[</span><span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.3</span><span class="p">]],</span> <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">w</span>
 </pre></div>
 
 </div>
@@ -12944,13 +13069,20 @@ $$J(\mathbf{w}) = \frac{1}{2} \sum_i \left( y^{(i)} - w^{(i)} x^{(i)}\right)^2$$
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[31]:</div>
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(3, 1)
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt output_prompt">Out[19]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([[  10],
-       [ 100],
-       [1000]])</pre>
+<pre>array([[ 0.1],
+       [ 0.2],
+       [ 0.3]])</pre>
 </div>
 
 </div>
@@ -12961,10 +13093,12 @@ $$J(\mathbf{w}) = \frac{1}{2} \sum_i \left( y^{(i)} - w^{(i)} x^{(i)}\right)^2$$
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ts1</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ts2</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]],</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">X</span>
 </pre></div>
 
 </div>
@@ -12975,12 +13109,20 @@ $$J(\mathbf{w}) = \frac{1}{2} \sum_i \left( y^{(i)} - w^{(i)} x^{(i)}\right)^2$$
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[33]:</div>
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(3, 2)
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt output_prompt">Out[20]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([[5310],
-       [6420]])</pre>
+<pre>array([[1, 2],
+       [3, 4],
+       [5, 6]])</pre>
 </div>
 
 </div>
@@ -12988,6 +13130,73 @@ $$J(\mathbf{w}) = \frac{1}{2} \sum_i \left( y^{(i)} - w^{(i)} x^{(i)}\right)^2$$
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">w</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[21]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[ 0.1,  0.2,  0.3]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">w</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[22]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[ 2.2,  2.8]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h6 id="Implementation:-Adaptive-Linear-Neuron">Implementation: Adaptive Linear Neuron<a class="anchor-link" href="#Implementation:-Adaptive-Linear-Neuron">&#182;</a></h6>
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -13011,6 +13220,8 @@ $$J(\mathbf{w}) = \frac{1}{2} \sum_i \left( y^{(i)} - w^{(i)} x^{(i)}\right)^2$$
             <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net_input</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
             <span class="n">errors</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">output</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eta</span> <span class="o">*</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
+            <span class="c1">#transpose of [n by p matrix] times [n by 1 column vector]</span>
+            
             <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eta</span> <span class="o">*</span> <span class="n">errors</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
             
             <span class="n">cost</span> <span class="o">=</span> <span class="p">(</span><span class="n">errors</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span>
@@ -13037,7 +13248,11 @@ $$J(\mathbf{w}) = \frac{1}{2} \sum_i \left( y^{(i)} - w^{(i)} x^{(i)}\right)^2$$
 <div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">100</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="s1">&#39;Iris-setosa&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">100</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">ada1</span> <span class="o">=</span> <span class="n">AdalineGD</span><span class="p">(</span><span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ada1</span><span class="o">.</span><span class="n">cost_</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">ada1</span><span class="o">.</span><span class="n">cost_</span><span class="p">),</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Epochs&#39;</span><span class="p">)</span>
@@ -13581,60 +13796,6 @@ SHAkAAAAAElFTkSuQmCC
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
