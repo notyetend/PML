@@ -6,7 +6,7 @@ Reference: Sebastian "Raschka, Python Machine Learning", 2015
 
 <a href="https://rawgit.com/notyetend/PML/master/notes/PythonMachineLearning_Chapter02.html">Chapter2. Training Machine Learning Algorithms</a>
 
-Chapter3. A Tour of Machine Learning Classifiers Using Scikit-learn
+<a href="https://rawgit.com/notyetend/PML/master/notes/PythonMachineLearning_Chapter03.html">Chapter3. A Tour of Machine Learning Classifiers Using Scikit-learn</a>
 
 Chapter4. Building Good Training Sets - Data Preprocessing
 
