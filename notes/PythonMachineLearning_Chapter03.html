@@ -11758,6 +11758,16 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>(SVM 2.2 이후 내용은 아직 작성중임)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Chapter3.-A-Tour-of-Machine-Learning-Classifiers-Using-Scikit-learn">Chapter3. A Tour of Machine Learning <u>Classifiers</u> Using Scikit-learn<a class="anchor-link" href="#Chapter3.-A-Tour-of-Machine-Learning-Classifiers-Using-Scikit-learn">&#182;</a></h1>
 </div>
 </div>
@@ -15373,25 +15383,7 @@ EEmSVO4fd+E4zkwf2F8AAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Maximum-margin-classification-with-support-vector-machines">Maximum margin classification with <u>support vector machines</u><a class="anchor-link" href="#Maximum-margin-classification-with-support-vector-machines">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h6 id="Maximum-margin-intuition">Maximum margin intuition<a class="anchor-link" href="#Maximum-margin-intuition">&#182;</a></h6>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>.</p>
+<hr>
 
 </div>
 </div>
@@ -15401,7 +15393,7 @@ EEmSVO4fd+E4zkwf2F8AAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h6 id="Dealing-with-the-nonlinearly-separable-case-using-slack-variables">Dealing with the nonlinearly separable case using slack variables<a class="anchor-link" href="#Dealing-with-the-nonlinearly-separable-case-using-slack-variables">&#182;</a></h6>
+<h3 id="Support-Vector-Machines&lt;/u&gt;">Support Vector Machines&lt;/u&gt;<a class="anchor-link" href="#Support-Vector-Machines&lt;/u&gt;">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -15410,7 +15402,14 @@ EEmSVO4fd+E4zkwf2F8AAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>.</p>
+<p>■ SVM은 1990년대 Vladimir Vapnik이 제안한 방법으로서 Classification 혹은 Regression 문제에 있어서 계산 효율이나 그 성능이 매우 좋은 방법론 중의 하나라고 할 수 있다.</p>
+<p>여기에서는 3가지 단계로 SVM에 대해 알아볼 것이다.</p>
+<ol>
+<li>Maximal margin classifier</li>
+<li>Support vector classifier</li>
+<li>Support vector machine  </li>
+</ol>
+<p>(아래 설명할 내용은 'An Introduction Statistical Learning'의 Chapter 9 을 참고함)</p>
 
 </div>
 </div>
@@ -15420,7 +15419,7 @@ EEmSVO4fd+E4zkwf2F8AAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h6 id="Alternative-implementation-in-scikit-learn">Alternative implementation in scikit-learn<a class="anchor-link" href="#Alternative-implementation-in-scikit-learn">&#182;</a></h6>
+<h6 id="1.-Maximal-margin-classifier">1. Maximal margin classifier<a class="anchor-link" href="#1.-Maximal-margin-classifier">&#182;</a></h6>
 </div>
 </div>
 </div>
@@ -15429,7 +15428,7 @@ EEmSVO4fd+E4zkwf2F8AAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>.</p>
+<p><u>1-1. 초평면(Hyperplane) 이란?</u></p>
 
 </div>
 </div>
@@ -15439,7 +15438,18 @@ EEmSVO4fd+E4zkwf2F8AAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Solving-nonlinear-problems-using-kernel-SVM">Solving nonlinear problems using <u>kernel SVM</u><a class="anchor-link" href="#Solving-nonlinear-problems-using-kernel-SVM">&#182;</a></h3>
+<p>■ 직선을 둘로 나누는 점,<br>
+평면을 둘로 나누는 직선,<br>
+3차원 공간을 둘로 나누는 어떤 평면,<br>
+4차원 공간에서도 공간을 둘로 나누는 어떤 3차원의 무엇인가를 생각해볼 수 있는데,<br>
+이렇게 $p$차원 공간을 둘로 나누는 $p-1$차원의 어떤 공간(affine)을 hyperplane이라 한다.</p>
+<p>■ 논의의 편의를 위해 2차원 공간에서만 생각해 보면<br>
+2차원 공간의 한 점은 하나의 데이터 포인트라 할 수 있고<br>
+어떤 직선(hyperplane)에 의해 이 직선 위의 점들과 아래의 점들로 데이터 포인트 들은 두개의 그룹으로 나뉘게 된다.</p>
+<p>2차원 공간에서의 한 점 $x_i$는 아래의 열벡터로 표현할 수 있고
+$$x_i = \left( \begin{array} {a} x_{i1} \\ x_{i2} 
+ \end{array} \right)$$</p>
+
 </div>
 </div>
 </div>
@@ -15448,7 +15458,8 @@ EEmSVO4fd+E4zkwf2F8AAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h6 id="Using-the-kernel-trick-to-find-separating-hyperplanes-in-higher-dimensional-space">Using the kernel trick to find separating hyperplanes in higher dimensional space<a class="anchor-link" href="#Using-the-kernel-trick-to-find-separating-hyperplanes-in-higher-dimensional-space">&#182;</a></h6>
+<p>2차원 공간상의 직선은 아래와 같이 표현할 수 있다.</p>
+
 </div>
 </div>
 </div>
@@ -15457,7 +15468,510 @@ EEmSVO4fd+E4zkwf2F8AAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>.</p>
+$$\beta_0 + \beta_1 X_1 + \beta_2 X_2 = 0$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img  src="./_images/03_svm2.PNG"/></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>이 직선은 위 그림과 같이 평면위의 점들을 파란 점들과 빨간 점으로 나눌 수 있는데</p>
+<ul>
+<li>직선위의 점들은 $\beta_0 + \beta_1 X_1 + \beta_2 X_2 = 0 $을 만족시키시고</li>
+<li>파란 점들은 직선 위에 있으므로 $\beta_0 + \beta_1 X_1 + \beta_2 X_2 > 0 $을 만족시키는 점들이며    </li>
+<li>빨간 점들은 직선 아래에 있으므로 $\beta_0 + \beta_1 X_1 + \beta_2 X_2 < 0$을 만족시키는 점들이다.</li>
+</ul>
+<p>또한 직선으로부터 멀어질 수록 그 값은 0과의 차이가 커지게 된다.</p>
+<p>이런 특성을 이용하여 어떤 직선이 주어져 있을 때<br>
+특정 점이 직선 상에 위치하는지 혹은 직선 위/아래 그리고 위/아래에 있다면 얼마나 떨어져 있는지를 알 수 있다.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>2차원 공간상에서의 논의는 $p$차원 공간으로 확장하여<br>
+$p$차원에서의 hyperplane은 아래와 같이 나타낼 수 있고<br>
+앞서 설명한 특성들이 모두 동일하게 적용된다.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p = 0$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><u>1-2. 초평면을 이용한 분류</u></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>■ 예를들어 특정 시점 기준 일주일 이내 이탈하거나 이탈하지 않은 유저 $n$명의<br>
+젬-소비지수($X_1$)와 던전-실패지수($X_2$)이라는 특성(feature)을 조사했다고 하자.</p>
+<p>feature가 두개 이므로  $n \times 2$의 matrix이고 2차원 상의 $n$개의 점으로 나타낼 수 있는데<br>
+이탈한 유저들은 파란색으로, 그렇지 않은 유저들은 붉은 색으로 표시했다고 하자.</p>
+<p>이 두가지 특성($X_1, X_2$)에 따라 유저들이 이탈이 극명하게 두 그룹($G_1, G_2$)으로 나뉜다고 <strong>가정</strong>하면<br>
+2차원상의 $n$개의 점을 나누는 어떤 직선을 생각해볼 수 있다.</p>
+<p>그런데 아래 그림과 같이 주어진 데이터에 대해 두 그룹을 정확히 나누는 직선은 무수히 많을 수 있다.<br>
+조사 대상에 포함되지 않은 새로운 유저에 대해서도 이 직선을 기준으로 좋은 예측 할 수 있다면 그 직선은 최적의 직선이라 할 수 있다.<br>
+만약 아래 우측 그림의 직선이 그 정답이라면, 어떻게 이 직선에 가까운 직선을 어떻게 찾을 수 있을까?</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img  src="./_images/03_svm3.PNG"/></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>■ 위와 같은 최적의 직선을 찾았고 만약 그 직선이 $\beta_0 + \beta_1 X_1 + \beta_2 X_2 = 0 $이라면<br>
+새로운 유저($\mathbf{X}_k$)의 특성($X_{k1}, X_{k2}$)을 위 직선에 대입하여<br>
+그 값($\beta_0 + \beta_1 X_{k1} + \beta_2 X_{k2}$)이 0보다 크다면 이 유저는 $G_1$에 속하는 것으로<br>
+반대로 0보다 작다면 $G_2$에 속하는 것으로 유저를 분류 할 수 있을 것이다.</p>
+<p>또한 유저의 특성이 직선에 가깝다면 그 유저는 반대 그룹과 특성상 큰 차이가 없다고 할 수 있고<br>
+직선에서 멀리 떨어져 있다면 특성이 분명한 유저라고 판단할 수 있을 것이다.<br>
+수학적으로는 직선에 가깝다는 것은 $\beta_0 + \beta_1 X_{k1} + \beta_2 X_{k2}$ 값이 0에 가깝다는 것이고<br>
+직선에서 멀다는 것은 $\beta_0 + \beta_1 X_{k1} + \beta_2 X_{k2}$값이 0과 멀리 떨어져 있다는 것이다.(법선 벡터와의 내적)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><u>1-3. Maximal Margin Classifier란 무엇인가?</u></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>■ 앞서 좌측 그림에서와 같이 데이터 점들이 어떤 hyperplane(앞서의 직선)에 의해 확실히 나뉠 수 있다면<br>
+이런 hyperplane은 무수히 많다고 할 수 있다. (조금식 움직일 수 있으므로)</p>
+<p>그렇다면 이렇게 많은 hyperplane중 어느 것이 최적의 선택일 할 수 있을까?</p>
+<p>많은 hyperplane중 인접한 데이터 점과의 수직 거리가 가장 먼 것을 고르겠다는 아이디어가 바로 <strong>maximal margin classifier</strong>이고,<br>
+그 hyperplane을 <strong>maximal margin hyperplane</strong>이라 한다.<br>
+(보다 엄밀하게 하나의 직선과 $n$개의 데이터 점이 있다면 이 직선과 각 점과의 거리는 $n$가지인데, 이들 중 가장 짧은 거리를 <strong>margin</strong>이라 한다.<br>
+또한 <strong>maximal margin hyperplane</strong>이란 $n$개의 데이터 점과의 <strong>margin</strong>이 최대가 되는 직선을 말한다.)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>앞서 예로 들었던 이탈자 데이터에서는 아래와 같은 (검은)직선이 바로 maximal margin hyperplane이라 할 수 있다.<br>
+(검은)직선 위쪽과 아래쪽의 점선은 margin을 표현하고 있다.</p>
+<p>그런데 maximal margin hyperplane를 결정함에 있어서 인접한 점과의 거리가 최대가 된다는 조건만 있기 때문에<br>
+margin 밖에 있는 점들은 maximal margin hyperplane의 위치에 어떠한 영향도 주지 못함을 알 수 있다.</p>
+<p>반면 직선에서 margin만큼 떨어진 점 3개는 maximal margin hyperplane을 직접 결정함을 알 수 있다.<br>
+이렇게 maximal margin hyperplane을 결정하는데 영향을 주는 데이터 점을 <strong>support vector</strong>라 한다.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img  src="./_images/03_svm4.PNG"/></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><u>1-4. Maximal Margin Classifier를 구하는 방법</u></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>■ $n$건의 데이터 점 $x_1, \dots, x_n \in \mathbb{R}^p$과 각각의 데이터 점에 해당하는 label $y_1, \dots, y_n \in \{-1, 1\}$이 있을 때,<br>
+이들을 확실히 둘로 나누는 공간(2차원에서는 직선) Maximal margin hyperplane은 아래 최적화 문제의 '해' 이다.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\begin{align}
+& \operatorname{maximize}_{\beta_0, \beta_1, \dots, \beta_p} M \\
+& \operatorname{subject to} \sum_{j=1}^{p} \beta^2_j = 1 \\
+& y_i (\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \dots + \beta_p x_{ip} ) \geq M ~~ \forall i = 1, \dots, n.
+\end{align}$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>위 식은 그 생김새 보다 간단한 의미를 담고 있다.<br>
+간단하게 2차원 공간(평면)에서 생각해보면<br>
+식은 아래와 같이 정리된다.<br>
+(데이터 1건에 대해서만 볼 것이며, $\beta_0 = 0$이고 $y=1$이라 가정하자.)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\begin{align}
+& \operatorname{maximize}_{\beta_1, \beta_2} M \\
+& \operatorname{subject to} \beta^2_1 + \beta^2_2 = 1 \\
+& \beta_1 x_{1} + \beta_2 x_{2} \geq M ~~ 
+\end{align}$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>또한 평면에 아래 그림과 같이 표현해 볼 수 있고, 각각의 의미는 아래와 같다.</p>
+<ul>
+<li>검은 직선: maximal margin hyperplane, $\beta_1 x_1 + \beta_2 x_2 = 0$</li>
+<li>빨간 직선: maximal margin hyperplane의 법선 vector, ($\beta_1, \beta_2$)</li>
+<li>파란 점  : 데이터 점, ($x_1, x_2$)</li>
+<li>녹색 점선: ($x_1, x_2$)의 ($\beta_1, \beta_2$)에 대한 정사영 혹은 maximal margin hyperplane와의 거리</li>
+</ul>
+<p>결국 $\beta^2_1 + \beta^2_2 = 1$라는 조건을 만족시키면서 $\beta_1 x_{1} + \beta_2 x_{2}$를 최대화 하는 ($\beta_1, \beta_2$)를 찾는 문이고</p>
+<p>$\beta_1 x_{1} + \beta_2 x_{2}$는 벡터 ($\beta_1, \beta_2$)과 벡터 ($x_1, x_2$)의 내적으로서<br>
+$\beta^2_1 + \beta^2_2$을 1로 제한 했으므로 내적의 값은 점 ($x_1, x_2$)과 평면(검은 직선)과의 거리가 된다.<br>
+즉  $\beta_1 x_{1} + \beta_2 x_{2} = M$의 값은 아래 그림의 녹색 점선의 길이와 같다.</p>
+<p>따라서 파란 점과 직선과의 거리가 최대가 되도록 멀어지도록 법선 벡터 ($\beta_1, \beta_2$)를 정하면 되는 것이다.<br>
+(다만 여기에서는 데이터 점 하나에 대해서만 고려 한 것이고,<br>
+$n$건의 데이터 점에 대해 $y_i$의 조건을 만족시키며 그 거리가 최대가 되는 ($\beta_1, \beta_2$)를 찾아야 한다.)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img  src="./_images/03_svm5.PNG"/></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><u>1-5. 분류가 불가능한 상황</u></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>■ 앞서 다뤘던 데이터는 다행히도 직선(선형 공간)으로 예외 없이 두 그룹으로 나뉘는 경우 였으나<br>
+아래 그림과 같이 현실에서의 문제는 그렇게 쉽게 둘로 나뉘지 않는 경우가 많을 것이다.</p>
+<p>즉 앞서의 최적화 문제는 아래 데이터에 대해 그 해가 존재하지 않는다.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img  src="./_images/03_svm6.PNG"/></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h6 id="Support-Vector-Classifiers">Support Vector Classifiers<a class="anchor-link" href="#Support-Vector-Classifiers">&#182;</a></h6>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><u>2-1. Support Vector Classifier란?</u></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>■ maximal margin classifier에서는 예외 없이 정확히 나누는 hyperplane을 찾는 방법이라서<br>
+ 예외가 존재하는 경우 조건을 만족시키는 hyperplane을 찾을 수 없는 문제가 발생한다.</p>
+<p>또한  maximal margin hyperplane이 존재하더라도 hyperplane에 인접한 점의 위치에 따라 hyperplane의 위치가 지나치게 민감하게 반응한다. 아래 그림을 보면 좌측의 원래 hyperplane(검은 직선)이 있고, 우측과 같이 새로운 데이터가 추가되었을 때 그 새로운 점의 유의미한지 아닌지에 무관하게 hyperplane의 위치가 급격히 바뀌게 된다.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img  src="./_images/03_svm7.PNG"/></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>그렇다면 꼭 예외 없이 모든 데이터 점을 분류 하기 보다는<br>
+모형이 일반적으로 좋은 성능을 갖기 위해 몇건 정도는 틀릴 수도 있어도 괜찮고<br>
+가끔 발생하는 특이값에 크게 좌우되지 않는 어떤 직선을 찾는 다면 더 좋을 것이다.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>즉 앞서 다뤘던 [Maximal Margin Classifier]의 조건을 일부 완화하여<br>
+몇 건 정도는 margin 안에 들어올 수도 있고<br>
+심하게는 몇건 정도는 hyperplane 경계를 넘어설수도 있는 hyperplane을 생각해볼 수 있고<br>
+이런 아이디어를 구체화 한 것이 바로 <strong>support vector classifier</strong>이다.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><u>2-2. Support Vector Classifier를 구하는 방법</u></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>■ [1-4. Maximal Margin Classifier를 구하는 방법]의 최적화 문제는 아래와 같고</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\begin{align}
+& \operatorname{maximize}_{\beta_0, \beta_1, \dots, \beta_p} M \\
+& \operatorname{subject to} \sum_{j=1}^{p} \beta^2_j = 1 \\
+& y_i (\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \dots + \beta_p x_{ip} ) \geq M ~~ \forall i = 1, \dots, n.
+\end{align}$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>여기에 앞서 설명했던 조건을 추가하여 <strong>Support Vector Classifier</strong>를 아래와 같은 최적화 문제로 정식화 할 수 있다.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\begin{align}
+& \operatorname{maximize}_{\beta_0, \beta_1, \dots, \beta_p} M \\
+& \operatorname{subject to} \sum_{j=1}^{p} \beta^2_j = 1 \\
+& y_i (\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \dots + \beta_p x_{ip} ) \geq M(1 - \epsilon_i) ~~ \forall i = 1, \dots, n. \\
+& \epsilon_i \geq 0, ~~ \sum_{i=1}^n \epsilon_i \leq C,
+\end{align}$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Maximal Margin Classifier와의 차이점은 $M$이 $M(1 - \epsilon_i)$으로 바뀐 부분인데<br>
+이는 데이터 점이 margin $M$만큼 떨어져 있어야 한다는 조건이 $M(1 - \epsilon_i)$만큼 떨어져 있어도 된다는 것으로 바뀐 것이다.</p>
+<p>뒤에 추가된 $\epsilon_i \geq 0, ~~ \sum_{i=1}^n \epsilon_i \leq C$는 예외를 허용하되 그 정도를 $C$로 제한하겠다는 것이다.<br>
+(예외가 너무 많다면 당연히 좋은 모형일 수 없기 때문이다.)</p>
+<p>※ $\epsilon_i$가 모두 0 이라면 이는 Maximal Margin Classifier와 같게 되고<br>
+$~~~~$ 0과 1 사이 값이라면 데이터 점이 margin과 hyperplane 사이에 있는 것이고<br>
+$~~~~$ 1보다 큰 값이라면 데이터 점이 오분류 되어 hyperplane을 넘어선 것이다.</p>
+<p>※ 큰 값의 $C$를 사용한다면 이는 예외를 많이 허용하겠다는 것이고 그만큼 모형은 느슨하며 under-fitting 가능성이 커진다.<br>
+$~~~~$반면 작은 $C$값을 사용한다면 예외가 작아지며 모형은 over-fitting할 가능성이 커지게 된다.</p>
+<p>(참고로 책(Python Machine Learning)에서 소개된 $\mathbf{C}$값은 지금 말하는 $C$값의 역수로서 그 특성이 반대이다. $\mathbf{C} \propto \frac{1}{C}$)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>■ 적절한 $C$값을 찾는 것은 좋은 모형을 결정하는데 있어서 매우 중요한 요소인데,<br>
+아래 그림과 같이 다양한 C값에 대한 모형의 변화를 확인할 수 있다.<br>
+(좌측 상단부터 우측 하단으로 점차 작은 $C$값을 사용한 것임)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img  src="./_images/03_svm8.PNG"/></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h6 id="Support-Vector-Machines">Support Vector Machines<a class="anchor-link" href="#Support-Vector-Machines">&#182;</a></h6>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><u>3-1. 비선형 방법을 이용한 분류</u></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><u>3-2. Support Vector Machine의 구체화</u></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><u></u></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><u></u></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
 
 </div>
 </div>
