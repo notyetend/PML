@@ -8,7 +8,7 @@ Reference: Sebastian "Raschka, Python Machine Learning", 2015
 
 <a href="https://rawgit.com/notyetend/PML/master/notes/PythonMachineLearning_Chapter03.html">Chapter3. A Tour of Machine Learning Classifiers Using Scikit-learn</a>
 
-Chapter4. Building Good Training Sets - Data Preprocessing
+<a href="https://rawgit.com/notyetend/PML/master/notes/PythonMachineLearning_Chapter04.html">Chapter4. Building Good Training Sets - Data Preprocessing</a>
 
 Chapter5. Compressing Data via Dimensionality Reduction
 
