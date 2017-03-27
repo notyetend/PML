@@ -12,7 +12,7 @@ Reference: Sebastian "Raschka, Python Machine Learning", 2015
 
 Chapter5. Compressing Data via Dimensionality Reduction
 
-Chapter6. Learning Best Practices for Model Evaluation and Hyperparameter Tuning 
+<a href="https://rawgit.com/notyetend/PML/master/notes/PythonMachineLearning_Chapter06.html">Chapter6. Learning Best Practices for Model Evaluation and Hyperparameter Tuning</a>
 
 Chapter7. Combining Different Models for Ensemble Learning
 
