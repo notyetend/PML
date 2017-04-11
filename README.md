@@ -14,7 +14,7 @@ Chapter5. Compressing Data via Dimensionality Reduction
 
 <a href="https://rawgit.com/notyetend/PML/master/notes/PythonMachineLearning_Chapter06.html">Chapter6. Learning Best Practices for Model Evaluation and Hyperparameter Tuning</a>
 
-Chapter7. Combining Different Models for Ensemble Learning
+<a href="https://rawgit.com/notyetend/PML/master/notes/PythonMachineLearning_Chapter07.html">Chapter7. Combining Different Models for Ensemble Learning</a>
 
 Chapter8. Applying Machine Learning to Sentiment Analysis
 
