@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>PythonMachineLearning_Chapter03</title>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>PythonMachineLearning_Chapter03</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -13,8 +11,8 @@
 *
 */
 /*!
- * Bootstrap v3.3.6 (http://getbootstrap.com)
- * Copyright 2011-2015 Twitter, Inc.
+ * Bootstrap v3.3.7 (http://getbootstrap.com)
+ * Copyright 2011-2016 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
@@ -1109,7 +1107,6 @@ a:focus {
   text-decoration: underline;
 }
 a:focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -2538,7 +2535,6 @@ select[size] {
 input[type="file"]:focus,
 input[type="radio"]:focus,
 input[type="checkbox"]:focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -3029,7 +3025,6 @@ select[multiple].input-lg {
 .btn.focus,
 .btn:active.focus,
 .btn.active.focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -8760,6 +8755,9 @@ body > #header .header-bar {
     margin-left: 10px;
   }
 }
+[dir="rtl"] #ipython_notebook {
+  float: right !important;
+}
 #noscript {
   width: auto;
   padding-top: 16px;
@@ -8962,8 +8960,14 @@ span#login_widget > .button .badge,
  *
  * Author: Jupyter Development Team
  */
+[dir="rtl"] #tabs li {
+  float: right;
+}
 ul#tabs {
   margin-bottom: 4px;
+}
+[dir="rtl"] ul#tabs {
+  margin-right: 0px;
 }
 ul#tabs a {
   padding-top: 6px;
@@ -8986,6 +8990,16 @@ ul.breadcrumb span {
 }
 .list_toolbar .tree-buttons {
   padding-top: 1px;
+}
+[dir="rtl"] .list_toolbar .tree-buttons {
+  float: left !important;
+}
+[dir="rtl"] .list_toolbar .pull-right {
+  padding-top: 1px;
+  float: left !important;
+}
+[dir="rtl"] .list_toolbar .pull-left {
+  float: right !important;
 }
 .dynamic-buttons {
   padding-top: 3px;
@@ -9122,6 +9136,9 @@ ul.breadcrumb span {
 #tree-selector {
   padding-right: 0px;
 }
+[dir="rtl"] #tree-selector a {
+  float: right;
+}
 #button-select-all {
   min-width: 50px;
 }
@@ -9211,6 +9228,9 @@ ul#new-menu {
   left: auto;
   right: 0;
 }
+[dir="rtl"] #new-menu {
+  text-align: right;
+}
 .kernel-menu-icon {
   padding-right: 12px;
   width: 24px;
@@ -9255,6 +9275,9 @@ ul#new-menu {
 }
 #running .panel-group .panel .panel-body .list_container .list_item:last-child {
   border-bottom: 0px;
+}
+[dir="rtl"] #running .col-sm-8 {
+  float: right !important;
 }
 .delete-button {
   display: none;
@@ -9551,6 +9574,7 @@ div.cell.selected.jupyter-soft-selected {
   }
 }
 div.inner_cell {
+  min-width: 0;
   /* Old browsers */
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -9571,11 +9595,6 @@ div.inner_cell {
   box-flex: 1;
   /* Modern browsers */
   flex: 1;
-}
-@-moz-document url-prefix() {
-  div.inner_cell {
-    overflow-x: hidden;
-  }
 }
 /* input_area and input_prompt must match in top border and margin for alignment */
 div.input_area {
@@ -11246,7 +11265,7 @@ div#pager .ui-resizable-handle::after {
 }
 .shortcut_key {
   display: inline-block;
-  width: 20ex;
+  width: 21ex;
   text-align: right;
   font-family: monospace;
 }
@@ -11558,6 +11577,7 @@ ul.typeahead-list > li > a {
   box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
 }
 .terminal-app .terminal {
+  width: 100%;
   float: left;
   font-family: monospace;
   color: white;
@@ -11571,6 +11591,9 @@ ul.typeahead-list > li > a {
 .terminal-app .terminal dummy-screen {
   line-height: 1em;
   font-size: 14px;
+}
+.terminal-app .terminal .xterm-rows {
+  padding: 10px;
 }
 .terminal-app .terminal-cursor {
   color: black;
@@ -11631,8 +11654,10 @@ ul.typeahead-list > li > a {
 .highlight .mh { color: #666666 } /* Literal.Number.Hex */
 .highlight .mi { color: #666666 } /* Literal.Number.Integer */
 .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
 .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
 .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
 .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
 .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
 .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
@@ -11643,9 +11668,11 @@ ul.typeahead-list > li > a {
 .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
 .highlight .ss { color: #19177C } /* Literal.String.Symbol */
 .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
 .highlight .vc { color: #19177C } /* Name.Variable.Class */
 .highlight .vg { color: #19177C } /* Name.Variable.Global */
 .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
     </style>
 <style type="text/css">
@@ -11688,10 +11715,29 @@ ul.typeahead-list > li > a {
 
     </style>
 <style type="text/css">
-    .CodeMirror { /* code font */
-    font-family: Consolas, Verdana, Tahoma;
+    /*
+Placeholder for custom user CSS
+mainly to be overridden in profile/static/custom/custom.css
+This will always be an empty file in IPython
+*/
+
+
+
+/* Change code font */
+.CodeMirror pre {
+    font-family: Consolas;
     font-size: 10pt;
 }
+
+div.output pre{
+    font-family: Consolas;
+    font-size: 9pt;
+}
+
+/*
+Fonts
+"Code New Roman", Consolas, Verdana, Tahoma, Courier
+*/
 
     </style>
 
@@ -11845,7 +11891,9 @@ scikit-learn을 이용해 구현해보자.</p>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[1]:</div>
+<div class="output_area">
+<div class="prompt output_prompt">Out[1]:</div>
+
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -11945,7 +11993,9 @@ sc.transform을 통해 실제 각 변수마다 표준화된 값이 계산된다.
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[4]:</div>
+<div class="output_area">
+<div class="prompt output_prompt">Out[4]:</div>
+
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -11990,7 +12040,9 @@ scikit-learn의 Perceptron 패키지를 사용하는데, 그 사용법은 Chapte
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
+<div class="output_area">
+<div class="prompt output_prompt">Out[5]:</div>
+
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12019,7 +12071,9 @@ scikit-learn의 Perceptron 패키지를 사용하는데, 그 사용법은 Chapte
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[6]:</div>
+<div class="output_area">
+<div class="prompt output_prompt">Out[6]:</div>
+
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12068,7 +12122,9 @@ weight쌍이 3개 존재함을 알 수 있다.</p>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>45
 [2 1 0 2 0 2 0 1 1 1 1 1 1 1 1 0 1 1 0 0 2 1 0 0 2 0 0 1 0 0 2 1 0 2 2 0 0
@@ -12115,7 +12171,9 @@ test data에는 어떤 예측을 하는지 살펴보면, 45건중 41건을 잘 �
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Accuracy: 0.91
 </pre>
@@ -12244,7 +12302,9 @@ training data가 아닌 다른 데이터에 대해서는 좋은 예측을 하지
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 
 
 <div class="output_png output_subarea ">
@@ -12722,7 +12782,9 @@ AElFTkSuQmCC
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>C:\Users\moon\Anaconda3\lib\site-packages\matplotlib\axes\_axes.py:531: UserWarning: No labelled objects found. Use label=&#39;...&#39; kwarg on individual plots.
   warnings.warn(&#34;No labelled objects found. &#34;
@@ -12730,7 +12792,9 @@ AElFTkSuQmCC
 </div>
 </div>
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 
 
 <div class="output_png output_subarea ">
@@ -13060,7 +13124,9 @@ $$\phi(z) = p = \frac{1}{1+e^{-z}}$$</p>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 
 
 <div class="output_png output_subarea ">
@@ -13468,7 +13534,9 @@ $$J(\phi(z), y;\mathbf{w}) = -y ~ \mathrm{log} \left( \phi(z) \right)
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 
 
 <div class="output_png output_subarea ">
@@ -13807,7 +13875,9 @@ $J(\mathbf{w})$를 최소화 하는 $\mathbf{w}$를 찾을 수 있다.</p>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 
 
 <div class="output_png output_subarea ">
@@ -14620,7 +14690,9 @@ $w$가 상대적으로 작기 때문에 overfitting이 다소 완화되었다고
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 
 
 <div class="output_png output_subarea ">
@@ -15043,7 +15115,9 @@ $w$의 <u>절대값</u>을 penalty로 사용하는 방법을 L1 regularization�
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 
 
 <div class="output_png output_subarea ">
@@ -15383,7 +15457,7 @@ EEmSVO4fd+E4zkwf2F8AAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Support-Vector-Machines&lt;/u&gt;">Support Vector Machines&lt;/u&gt;<a class="anchor-link" href="#Support-Vector-Machines&lt;/u&gt;">&#182;</a></h3>
+<h3 id="Support-Vector-Machines">Support Vector Machines<a class="anchor-link" href="#Support-Vector-Machines">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -16053,7 +16127,7 @@ $$\begin{align} <\mathbf{x_1}, \mathbf{x_2}> &= x_{11} x_{21} + x_{12} x_{22} + 
 <p>그런데 앞서 (linear) support vector classifier이 어떤 최적화 문제의 '해'라고 했었고,<br>
 그 해는 아래와 같이$p$차원 벡터 $\mathbf{x}$와 각 데이터 점 벡터 $\mathbf{x_i}$과의 내적을 합한 형태로 정리된다.<br>
 (중간 과정에 대한 설명은 생략한다.)
-$$f(x) = \beta_0 + \sum_{i=0}^n \alpha_i <x, x_i>$$</p>
+$$f(x) = \beta_0 + \sum_{i=0}^n \alpha_i \left<x, x_i \right>$$</p>
 
 </div>
 </div>
@@ -16214,7 +16288,9 @@ radial kernel을 이용한 SVM 분류 결과아 아래 우측과 같다.</p>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 
 
 <div class="output_png output_subarea ">
@@ -16655,7 +16731,9 @@ ziXM/wP0lS23cOqT5QAAAABJRU5ErkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 
 
 <div class="output_png output_subarea ">
@@ -16850,7 +16928,9 @@ JlkjIg8CaABYB+BlAE1V/TOvjbJIRK4B8E0Ax2FuDiqA/6Kqj3ttmAUi8g4AD8D8u1wC4CFV/Wzq
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 
 
 <div class="output_png output_subarea ">
@@ -17102,7 +17182,9 @@ IgAAAABJRU5ErkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 
 
 <div class="output_png output_subarea ">
@@ -17526,7 +17608,9 @@ D1FhD1UP3dhzAAAAAElFTkSuQmCC
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 
 
 <div class="output_png output_subarea ">
@@ -17917,112 +18001,11 @@ AAAASUVORK5CYII=
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>(Tree model과 KNN은 이후 시간이 나면 다루도록 하겠습니다.)</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Decision-tree-learning"><u>Decision tree learning</u><a class="anchor-link" href="#Decision-tree-learning">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h6 id="Maximizing-information-gain---getting-the-most-bang-for-the-buck">Maximizing information gain - getting the most bang for the buck<a class="anchor-link" href="#Maximizing-information-gain---getting-the-most-bang-for-the-buck">&#182;</a></h6>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h6 id="Building-a-decision-tree">Building a decision tree<a class="anchor-link" href="#Building-a-decision-tree">&#182;</a></h6>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h6 id="Combining-weak-to-strong-learners-via-random-forests">Combining weak to strong learners via random forests<a class="anchor-link" href="#Combining-weak-to-strong-learners-via-random-forests">&#182;</a></h6>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="K-nearest-neighbors---a-lazy-learning-algorithm">K-nearest neighbors - a lazy learning algorithm<a class="anchor-link" href="#K-nearest-neighbors---a-lazy-learning-algorithm">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>.</p>
-
-</div>
-</div>
-</div>
     </div>
   </div>
 </body>
+
+ 
+
+
 </html>
